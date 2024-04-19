@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <header> -->
+        <nav>
+            <div class="logo">
+                     <span><img src="Screenshot (17).png" alt=""></span>
+            </div>
+            <div class="menu">
+                <a href="index.html">Home</a>
+                <a href="#member"  >About</a>
+                <a href="#">Gallery</a>
+                <a href="#newsletter">Contact</a>
+            </div>
+            <div class="icon">
+                <i class="fa fa-search"></i>
+                <a href="signup.html">Login</a>
+            </div>
+        </nav>
+    <!-- </header> -->
+    <div class="filter-section">
+        <label for="specialty-filter">Filter by Specialty:</label>
+        <select id="specialty-filter">
+          <option value="all">All Specialties</option>
+          <option value="portrait">Portrait</option>
+          <option value="landscape">Landscape</option>
+          <option value="fashion">Fashion</option>
+          <!-- Add more specialties as needed -->
+        </select>
+        
+        <label for="sort-by">Sort By:</label>
+        <select id="sort-by">
+          <option value="name">Name</option>
+          <option value="rating">Rating</option>
+          <!-- Add more sorting options as needed -->
+        </select>
+      </div>
+      
+      <div class="photo-editors-list">
+        <!-- Photo editors will be dynamically added here -->
+      </div>
+
+      <style>
+        /* Add your CSS styles here */
+
+/* CSS for filtering section */
+body{
+    width: 100%;
+    height: auto;
+    /* background:linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url(takashi-miyazaki-q2bHGRyJH64-unsplash\(1\).jpg); */
+    background : black;
+    /* background: #080808; */
+    background-size: cover;
+    place-items: center;
+
+    /* background-attachment: fixed; */
+    /* margin: 0;
+    padding: 0; */
+    
+    
+   
+    
+}
+
+nav{
+    width: 100%;
+    height: 80px;
+    /* background: #080808; */
+    background: black;
+    color: rgb(0, 0, 0);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* padding-left: 80px;
+    padding-right: 80px;  */
+    position: fixed;
+    top: 0px;
+    z-index: 1;
+    /* border-bottom: 2px solid rgba(88, 88, 88, 0.2); */
+   
+}
+
+.logo{
+    font-family: sans-serif;
+    font-size: 2.5em;
+    
+
+
+}
+.logo img{
+    width: 80px;
+   
+}
+.logo span{
+ color: red;
+ padding: 0px 69px;
+}
+.menu a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    font-family: sans-serif;
+    font-size:20px ;
+}
+.menu a:first-child{
+    color: red;
+    
+}
+.menu a:hover{
+    /* font-size: 23px; */
+    color: rgb(255, 0, 0);
+    /* box-shadow: 0px 0px 10px 5px rgb(255, 0, 0); */
+
+}
+.icon i{
+    font-size: 20px;
+    color: white;
+}
+.icon i:hover{
+    font-size: 25px;
+    color: rgb(255, 0, 0);
+}
+.icon a{
+    text-decoration: none;
+    background: -webkit-linear-gradient(left,#ff2a0092,#fb2a00,#ff3c00
+    , #ff440092);    
+    color: white;
+    padding: 10px 20px;
+    margin-left:30px ;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+.icon a:hover{
+    background: rgb(197, 3, 3);
+
+}
+
+
+.filter-section {
+  margin-bottom: 20px;
+  margin-top: 100px;
+  color: white;
+}
+
+.filter-section label {
+  margin-right: 10px;
+}
+
+.filter-section select {
+  padding: 5px;
+  font-size: 14px;
+}
+
+/* CSS for photo editors list */
+.photo-editors-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.editor-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.editor-item h3 {
+  margin-top: 0;
+}
+
+.editor-item p {
+  margin: 5px 0;
+}
+
+      </style>
+
+
+
+<script>
+
+    // Sample data for photo editors
+const photoEditors = [
+  { name: "John Doe", specialty: "portrait", rating: 4.5 },
+  { name: "Jane Smith", specialty: "landscape", rating: 4.2 },
+  { name: "David Lee", specialty: "fashion", rating: 4.8 },
+  // Add more photo editor data as needed
+];
+
+// Function to render photo editors list
+function renderPhotoEditors(photoEditors) {
+  const photoEditorsList = document.querySelector('.photo-editors-list');
+  photoEditorsList.innerHTML = '';
+
+  photoEditors.forEach(editor => {
+    const editorItem = document.createElement('div');
+    editorItem.classList.add('editor-item');
+    editorItem.innerHTML = `
+      <h3>${editor.name}</h3>
+      <p>Specialty: ${editor.specialty}</p>
+      <p>Rating: ${editor.rating}</p>
+    `;
+    photoEditorsList.appendChild(editorItem);
+  });
+}
+
+// Initial rendering of photo editors list
+renderPhotoEditors(photoEditors);
+
+// Event listeners for filtering and sorting
+document.getElementById('specialty-filter').addEventListener('change', function() {
+  const specialty = this.value;
+  const filteredEditors = specialty === 'all' ? photoEditors : photoEditors.filter(editor => editor.specialty === specialty);
+  renderPhotoEditors(filteredEditors);
+});
+
+document.getElementById('sort-by').addEventListener('change', function() {
+  const sortBy = this.value;
+  let sortedEditors = [];
+  if (sortBy === 'name') {
+    sortedEditors = photoEditors.slice().sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortBy === 'rating') {
+    sortedEditors = photoEditors.slice().sort((a, b) => b.rating - a.rating);
+  }
+  renderPhotoEditors(sortedEditors);
+});
+
+</script>
+</body>
+</html>
